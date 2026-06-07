@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Md Sadique Ashraf — Java Full Stack Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f9f7f4;
+    --surface: #ffffff;
+    --text: #1a1816;
+    --muted: #6b6560;
+    --accent: #2d6a4f;
+    --accent-light: #e8f5ef;
+    --accent2: #c17f3d;
+    --border: rgba(26,24,22,0.1);
+    --radius: 12px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 16px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(249,247,244,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 80px 2rem 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    width: 100%;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    line-height: 1.12;
+    margin-bottom: 1.25rem;
+    color: var(--text);
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-desc {
+    font-size: 1.05rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    max-width: 440px;
+  }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: #245c44; transform: translateY(-1px); }
+  .btn-outline {
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+  /* hero right card */
+  .hero-card {
+    background: var(--surface);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    padding: 2rem;
+    position: relative;
+  }
+  .avatar-circle {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent) 0%, #52b788 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    color: #fff;
+    margin-bottom: 1rem;
+    letter-spacing: 0.02em;
+  }
+  .hero-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 4px; }
+  .hero-card .role { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .info-row { display: flex; align-items: center; gap: 10px; font-size: 0.875rem; color: var(--muted); margin-bottom: 10px; }
+  .info-icon { width: 28px; height: 28px; background: var(--accent-light); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .info-icon svg { width: 14px; height: 14px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
+  .stat-row { display: flex; gap: 1.5rem; }
+  .stat { text-align: center; }
+  .stat-num { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--accent); }
+  .stat-lbl { font-size: 0.75rem; color: var(--muted); }
+
+  /* SECTIONS */
+  section { padding: 80px 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .section-sub { color: var(--muted); max-width: 520px; margin-bottom: 3rem; }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .about-text p { color: var(--muted); margin-bottom: 1rem; font-size: 1rem; }
+  .about-highlight {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    padding: 1rem 1.25rem;
+    border-radius: 0 8px 8px 0;
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .about-right { display: flex; flex-direction: column; gap: 1rem; }
+  .about-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .about-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .about-item h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; }
+  .about-item p { font-size: 0.825rem; color: var(--muted); }
+
+  /* SKILLS */
+  .skills-bg { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+  .skill-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .skill-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.07); }
+  .skill-category { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent2); margin-bottom: 1rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text);
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .tag:hover { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+
+  /* EXPERIENCE */
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--border); }
+  .timeline-item { position: relative; padding-bottom: 2.5rem; }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-dot {
+    position: absolute; left: -2rem; top: 4px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  .timeline-date { font-size: 0.8rem; color: var(--muted); font-weight: 500; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .timeline-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 4px; }
+  .timeline-org { font-size: 0.875rem; color: var(--accent); font-weight: 500; margin-bottom: 8px; }
+  .timeline-desc { font-size: 0.9rem; color: var(--muted); }
+
+  /* EDUCATION */
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .edu-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+  .edu-card:hover { transform: translateY(-2px); }
+  .edu-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent);
+  }
+  .edu-year {
+    display: inline-block;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-bottom: 0.75rem;
+  }
+  .edu-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+  .edu-card .inst { font-size: 0.875rem; color: var(--muted); margin-bottom: 6px; }
+  .edu-card .degree { font-size: 0.85rem; color: var(--accent2); font-weight: 500; }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .project-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.09); }
+  .project-top {
+    padding: 1.75rem;
+    background: var(--accent-light);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .project-emoji { font-size: 2.2rem; }
+  .project-badge {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px; border-radius: 100px;
+    background: var(--accent); color: #fff;
+  }
+  .project-badge.personal { background: var(--accent2); }
+  .project-body { padding: 1.5rem; }
+  .project-body h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .project-body p { font-size: 0.875rem; color: var(--muted); margin-bottom: 1rem; }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 6px; }
+  .stack-tag {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 3px 8px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* CONTACT */
+  .contact-wrapper {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;
+  }
+  .contact-left p { color: var(--muted); margin-bottom: 1.5rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none; color: var(--text);
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+  .contact-link:hover { color: var(--accent); }
+  .contact-link-icon { width: 36px; height: 36px; background: var(--accent-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .contact-link-icon svg { width: 16px; height: 16px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label { font-size: 0.85rem; font-weight: 500; }
+  .form-group input, .form-group textarea {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: var(--text);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); }
+  .form-group textarea { min-height: 120px; resize: vertical; }
+  .btn-send {
+    background: var(--accent); color: #fff;
+    border: none; cursor: pointer;
+    padding: 13px 28px; border-radius: 8px;
+    font-family: inherit; font-size: 0.9rem; font-weight: 600;
+    width: fit-content;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-send:hover { background: #245c44; transform: translateY(-1px); }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.825rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-text-anim { animation: fadeUp 0.7s ease forwards; }
+  .hero-card-anim { animation: fadeUp 0.7s 0.15s ease both; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .hero-inner, .about-grid, .edu-grid, .projects-grid, .contact-wrapper { grid-template-columns: 1fr; }
+    .stat-row { justify-content: center; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">MSA</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div id="hero" style="background: var(--bg);">
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-text-anim">
+        <div class="hero-tag">Available for Opportunities</div>
+        <h1>Md Sadique<br><em>Ashraf</em></h1>
+        <p class="hero-desc">Java Backend Developer with strong expertise in Spring Boot, Hibernate & REST APIs. B.Tech in Computer Science & Engineering, trained at JSpiders.</p>
+        <div class="hero-ctas">
+          <a href="#projects" class="btn-primary">View My Work</a>
+          <a href="#contact" class="btn-outline">Get in Touch</a>
+        </div>
+      </div>
+      <div class="hero-card hero-card-anim">
+        <div class="avatar-circle">SA</div>
+        <h3>Md Sadique Ashraf</h3>
+        <p class="role">Java Backend Developer</p>
+        <div class="info-row">
+          <div class="info-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          Bihar Sharif, Bihar, India
+        </div>
+        <div class="info-row">
+          <div class="info-icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          Java Full Stack (JSpiders, 2024–25)
+        </div>
+        <div class="info-row">
+          <div class="info-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </div>
+          B.Tech — CSE, 2024
+        </div>
+        <div class="divider"></div>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-num">2</div><div class="stat-lbl">Projects</div></div>
+          <div class="stat"><div class="stat-num">1+</div><div class="stat-lbl">Year Training</div></div>
+          <div class="stat"><div class="stat-num">∞</div><div class="stat-lbl">Curiosity</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">About Me</div>
+  <div class="section-title">Who I Am</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Hello! I'm Md Sadique Ashraf, a passionate Java Full Stack Developer based in Bihar Sharif, India. I completed my Bachelor's degree in Computer Science & Engineering from Guru Nanak Institute of Technology in 2024.</p>
+      <p>After graduation, I invested one year at JSpiders to deepen my backend expertise — mastering Java, Spring Boot, Hibernate, REST API design, and database management. My strength lies in building clean, well-structured server-side applications.</p>
+      <p>I enjoy solving complex backend problems, designing efficient data models, and building APIs that power great products. I continuously learn new technologies to grow as a backend engineer.</p>
+      <div class="about-highlight">🎯 Currently seeking full-time opportunities as a Java Backend / Full Stack Developer.</div>
+    </div>
+    <div class="about-right">
+      <div class="about-item" style="border: 1.5px solid var(--accent); background: var(--accent-light);">
+        <div class="about-icon">⚙️</div>
+        <div>
+          <h4 style="color: var(--accent);">Strong Backend Engineer</h4>
+          <p>Designing and building robust RESTful APIs, service layers, and database architectures using Java, Spring Boot, and Hibernate.</p>
+        </div>
+      </div>
+      <div class="about-item">
+        <div class="about-icon">🚀</div>
+        <div>
+          <h4>Self-Motivated Learner</h4>
+          <p>Built an e-commerce project independently — demonstrating initiative and the ability to learn by doing.</p>
+        </div>
+      </div>
+      <div class="about-item">
+        <div class="about-icon">🤝</div>
+        <div>
+          <h4>Team Player</h4>
+          <p>Collaborated on guided projects at JSpiders, developing skills in working within structured team environments.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<div class="skills-bg" id="skills">
+  <section>
+    <div class="section-label">Technical Skills</div>
+    <div class="section-title">My Tech Stack</div>
+    <p class="section-sub">Backend-first developer with deep expertise in Java ecosystem — building robust APIs, scalable services, and database-driven applications.</p>
+
+    <!-- Backend highlight banner -->
+    <div style="background: var(--accent); border-radius: 16px; padding: 1.75rem 2rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+      <div style="flex: 1; min-width: 200px;">
+        <div style="font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 6px;">Core Strength</div>
+        <div style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: #fff; margin-bottom: 6px;">Backend Development</div>
+        <div style="font-size: 0.875rem; color: rgba(255,255,255,0.8);">Java • Spring Boot • Hibernate • REST APIs • MySQL</div>
+      </div>
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <div style="background: rgba(255,255,255,0.15); border-radius: 10px; padding: 0.75rem 1.25rem; text-align: center;">
+          <div style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: #fff;">6+</div>
+          <div style="font-size: 0.75rem; color: rgba(255,255,255,0.75);">Backend Technologies</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.15); border-radius: 10px; padding: 0.75rem 1.25rem; text-align: center;">
+          <div style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: #fff;">1yr</div>
+          <div style="font-size: 0.75rem; color: rgba(255,255,255,0.75);">Intensive Training</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-card" style="border: 2px solid var(--accent); background: var(--accent-light);">
+        <div class="skill-category" style="color: var(--accent);">⚙️ Backend — Primary Focus</div>
+        <div class="skill-tags">
+          <span class="tag" style="background: var(--accent); color: #fff; border-color: var(--accent);">Spring Boot</span>
+          <span class="tag" style="background: var(--accent); color: #fff; border-color: var(--accent);">Spring MVC</span>
+          <span class="tag" style="background: var(--accent); color: #fff; border-color: var(--accent);">Hibernate</span>
+          <span class="tag" style="background: var(--accent); color: #fff; border-color: var(--accent);">JDBC</span>
+          <span class="tag" style="background: var(--accent); color: #fff; border-color: var(--accent);">REST APIs</span>
+          <span class="tag" style="background: var(--accent); color: #fff; border-color: var(--accent);">Servlets</span>
+          <span class="tag" style="background: var(--accent); color: #fff; border-color: var(--accent);">JSP</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">☕ Core Language</div>
+        <div class="skill-tags">
+          <span class="tag">Core Java</span>
+          <span class="tag">Advanced Java</span>
+          <span class="tag">OOP</span>
+          <span class="tag">Collections</span>
+          <span class="tag">Exception Handling</span>
+          <span class="tag">Multithreading</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">🗄️ Database</div>
+        <div class="skill-tags">
+          <span class="tag">MySQL</span>
+          <span class="tag">SQL Queries</span>
+          <span class="tag">JPA</span>
+          <span class="tag">Database Design</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">🛠️ Tools & Frontend</div>
+        <div class="skill-tags">
+          <span class="tag">Git</span>
+          <span class="tag">GitHub</span>
+          <span class="tag">Maven</span>
+          <span class="tag">Postman</span>
+          <span class="tag">Eclipse IDE</span>
+          <span class="tag">HTML/CSS</span>
+          <span class="tag">Bootstrap</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Experience</div>
+  <div class="section-title">My Journey</div>
+  <p class="section-sub">Training and hands-on experience that shaped me as a developer.</p>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2024 – 2025</div>
+      <div class="timeline-title">Java Full Stack Developer Trainee</div>
+      <div class="timeline-org">JSpiders, Bangalore</div>
+      <div class="timeline-desc">
+        Completed an intensive one-year Java Full Stack course covering Core Java, Advanced Java, Spring Boot, Hibernate, REST APIs, and React. Built real-world projects under mentorship — including an Online Food Order Application. Practiced agile-style development, version control with Git, and API testing with Postman.
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2020 – 2024</div>
+      <div class="timeline-title">B.Tech — Computer Science & Engineering</div>
+      <div class="timeline-org">Guru Nanak Institute Of Technology</div>
+      <div class="timeline-desc">
+        Completed four-year engineering degree in Computer Science and Engineering. Gained strong fundamentals in Data Structures, Algorithms, Database Management, Operating Systems, Object-Oriented Programming, and Computer Networks.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<div style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);" id="education">
+  <section>
+    <div class="section-label">Education</div>
+    <div class="section-title">Academic Background</div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-year">2024 Passout</div>
+        <h3>Bachelor of Technology</h3>
+        <p class="inst">Guru Nanak Institute Of Technology</p>
+        <p class="degree">Computer Science & Engineering</p>
+        <p style="font-size:0.85rem; font-weight:600; color:var(--accent); margin-top:8px;">CGPA: 7.94 / 10</p>
+      </div>
+      <div class="edu-card">
+        <div class="edu-year">2024 – 2025</div>
+        <h3>Java Full Stack Course</h3>
+        <p class="inst">JSpiders Training Institute</p>
+        <p class="degree">Java • Spring Boot • React • MySQL</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Projects</div>
+  <div class="section-title">What I've Built</div>
+  <p class="section-sub">Real-world applications that demonstrate my full stack capabilities.</p>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-emoji">🍔</div>
+        <span class="project-badge">JSpiders Project</span>
+      </div>
+      <div class="project-body">
+        <h3>Online Food Order Application</h3>
+        <p>A pure backend food ordering system built entirely with Java and Spring Boot. Implements REST APIs for user management, menu browsing, cart operations, and order processing — tested and verified via Postman. No frontend used.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Java</span>
+          <span class="stack-tag">Spring Boot</span>
+          <span class="stack-tag">Hibernate</span>
+          <span class="stack-tag">MySQL</span>
+          <span class="stack-tag">REST API</span>
+          <span class="stack-tag">Postman</span>
+        </div>
+        <a href="https://github.com/SADIQUE-ASHRAF/Online-Food-Order-Application" target="_blank" style="display:inline-flex; align-items:center; gap:6px; margin-top:1rem; font-size:0.85rem; font-weight:600; color:var(--accent); text-decoration:none; border:1.5px solid var(--accent); padding:6px 14px; border-radius:6px; transition:background 0.2s;" onmouseover="this.style.background='var(--accent-light)'" onmouseout="this.style.background='transparent'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+          View on GitHub
+        </a>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-emoji">🛒</div>
+        <span class="project-badge personal">Personal Project</span>
+      </div>
+      <div class="project-body">
+        <h3>E-Commerce Shopping Cart Application</h3>
+        <p>An independently built e-commerce platform featuring product listing, cart management, user authentication, and order processing. Demonstrates self-initiative and the ability to design and build a project from scratch.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Java</span>
+          <span class="stack-tag">Spring MVC</span>
+          <span class="stack-tag">Hibernate</span>
+          <span class="stack-tag">MySQL</span>
+          <span class="stack-tag">Bootstrap</span>
+          <span class="stack-tag">JSP</span>
+        </div>
+        <a href="https://github.com/SADIQUE-ASHRAF/ecommerce-shopping-cart-project" target="_blank" style="display:inline-flex; align-items:center; gap:6px; margin-top:1rem; font-size:0.85rem; font-weight:600; color:var(--accent2); text-decoration:none; border:1.5px solid var(--accent2); padding:6px 14px; border-radius:6px; transition:background 0.2s;" onmouseover="this.style.background='#fdf3e7'" onmouseout="this.style.background='transparent'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+          View on GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div style="background: var(--surface); border-top: 1px solid var(--border);" id="contact">
+  <section>
+    <div class="section-label">Contact</div>
+    <div class="section-title">Let's Connect</div>
+    <p style="color:var(--muted); margin-bottom:2rem; max-width:540px;">I'm actively looking for full-time Java Backend / Full Stack Developer roles. If you have an opportunity or just want to connect — feel free to reach out directly!</p>
+    <div class="contact-links">
+      <a href="mailto:sadiqueashraf07@gmail.com" class="contact-link">
+        <div class="contact-link-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        sadiqueashraf07@gmail.com
+      </a>
+      <a href="https://github.com/SADIQUE-ASHRAF" target="_blank" class="contact-link">
+        <div class="contact-link-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+        </div>
+        github.com/SADIQUE-ASHRAF
+      </a>
+      <a href="https://www.linkedin.com/in/md-sadique-ashraf-6b3698284" target="_blank" class="contact-link">
+        <div class="contact-link-icon">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        </div>
+        linkedin.com/in/md-sadique-ashraf
+      </a>
+      <a href="#" class="contact-link">
+        <div class="contact-link-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        Bihar Sharif, Bihar, India
+      </a>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Md Sadique Ashraf — Designed & Built with ❤️ &nbsp;|&nbsp; Java Full Stack Developer</p>
+</footer>
+
+</body>
+</html>
